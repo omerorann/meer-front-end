@@ -1,15 +1,12 @@
-import localFont from "next/font/local";
+import { Quicksand } from "next/font/google";
 import "./globals.css";
+import Header from "./components/Header";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+// Quicksand fontunu import et
+const quicksand = Quicksand({
+  weight: ["400", "500", "700"], // İhtiyacın olan ağırlıkları belirt
+  subsets: ["latin"], // Latin alfabesi kullanıyorsan
+  variable: "--font-quicksand", // CSS variable tanımlaması
 });
 
 export const metadata = {
@@ -20,9 +17,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${quicksand.variable} antialiased`}>
+        <Header />
         {children}
       </body>
     </html>
