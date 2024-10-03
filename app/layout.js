@@ -1,7 +1,6 @@
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
-
 // Quicksand fontunu import et
 const quicksand = Quicksand({
   weight: ["400", "500", "700"], // İhtiyacın olan ağırlıkları belirt
