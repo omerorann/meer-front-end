@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
   return (
     <div
       className="w-64 h-96 bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
-      onClick={() => router.push(`/products/${product.id}`)} // Ürün detay sayfasına yönlendir
+      onClick={() => router.push(`/productDetails/${product.id}`)} // Ürün detay sayfasına yönlendir
     >
       <img
         src={product.imgUrl}

@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
-import ProductCard from "./ProductCard";
+import { useState, useEffect } from "react";
+import ProductCard from "../components/ProductCard";
 
-const ProductSlider = () => {
+const AllProductsPage = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const ProductSlider = () => {
         <div
           id="product-slider"
           className="flex gap-6 overflow-x-auto scroll-smooth snap-x scrollbar-hide w-full px-10"
-          style={{ overflowY: 'hidden', height: '500px' }} // Yüksekliği 300px olarak ayarladık
+          style={{ overflowY: "hidden", height: "500px" }} // Yüksekliği 300px olarak ayarladık
         >
           {products.map((product) => (
             <div
@@ -72,5 +74,4 @@ const ProductSlider = () => {
   );
 };
 
-export default ProductSlider;
-  
+export default AllProductsPage;
