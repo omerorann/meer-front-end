@@ -10,7 +10,7 @@ export default function Login() {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false); // Yükleme durumu için state
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,12 +23,11 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
-    setLoading(true); // Yükleme durumunu başlat
+    setLoading(true);
 
-    // Form verilerini kontrol etme
     if (!formData.email || !formData.password) {
       setErrorMessage("Email and password are required.");
-      setLoading(false); // Yükleme durumunu durdur
+      setLoading(false);
       return;
     }
 
@@ -44,8 +43,8 @@ export default function Login() {
       );
 
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token); // Token'ı saklayın
-        router.push("/"); // Login sonrası ana sayfaya yönlendirme.
+        localStorage.setItem("token", response.data.token);
+        router.push("/");
       }
     } catch (error) {
       if (error.response) {
@@ -54,7 +53,7 @@ export default function Login() {
         setErrorMessage("An error occurred. Please try again.");
       }
     } finally {
-      setLoading(false); // Yükleme durumunu durdur
+      setLoading(false);
     }
   };
 
@@ -106,14 +105,14 @@ export default function Login() {
             className={`w-full ${
               loading ? "bg-gray-400" : "bg-blue-600"
             } text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200`}
-            disabled={loading} // Yükleme sırasında butonu devre dışı bırak
+            disabled={loading}
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="mt-4 text-center">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a href="/register" className="text-blue-500 hover:underline">
             Register
           </a>
