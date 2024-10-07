@@ -25,50 +25,14 @@ const AllProductsPage = () => {
   };
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full p-6">
       <h2 className="text-2xl font-bold text-center mb-6">Tüm Ürünler</h2>
-      <div className="relative flex items-center">
-        {/* Sol ok */}
-        <button
-          className="absolute left-0 z-10 p-2 bg-white shadow-md rounded-full hover:bg-gray-200 transition"
-          onClick={() => {
-            document.getElementById("product-slider").scrollBy({
-              left: -300,
-              behavior: "smooth",
-            });
-          }}
-        >
-          &#8592;
-        </button>
-
-        {/* Ürünler kaydırma alanı */}
-        <div
-          id="product-slider"
-          className="flex gap-6 overflow-x-auto scroll-smooth snap-x scrollbar-hide w-full px-10"
-          style={{ overflowY: "hidden", height: "500px" }} // Yüksekliği 300px olarak ayarladık
-        >
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="snap-center min-w-[250px] flex-shrink-0 transition-transform transform hover:scale-105"
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
-        </div>
-
-        {/* Sağ ok */}
-        <button
-          className="absolute right-0 z-10 p-2 bg-white shadow-md rounded-full hover:bg-gray-200 transition"
-          onClick={() => {
-            document.getElementById("product-slider").scrollBy({
-              left: 300,
-              behavior: "smooth",
-            });
-          }}
-        >
-          &#8594;
-        </button>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
+        {products.map((product) => (
+          <div key={product.id} className="flex justify-center">
+            <ProductCard product={product} />
+          </div>
+        ))}
       </div>
     </div>
   );

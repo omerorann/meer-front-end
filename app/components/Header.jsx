@@ -1,18 +1,54 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiSearch, CiUser, CiMenuBurger, CiShoppingCart } from "react-icons/ci";
 import { useRouter } from "next/navigation";
+import axios from "axios"; // Axios'ı içe aktarın
 
 const Header = () => {
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Giriş yapıldıysa kullanıcı bilgilerini al
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(
+            "https://meer-backend-3189f875378d.herokuapp.com/api/auth/me",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Token'ı yetkilendirme başlığı olarak ekle
+              },
+            }
+          );
+          setUserName(response.data.name || "User"); // Kullanıcı adını ayarla
+          setIsLoggedIn(true);
+        } catch (error) {
+          console.error("Kullanıcı bilgileri alınamadı:", error);
+          // Eğer hata alırsanız, kullanıcıyı çıkış yapmaya yönlendirebilirsiniz.
+          setIsLoggedIn(false);
+        }
+      };
+
+      fetchUserData();
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+    setIsLoggedIn(false);
+    router.push("/login");
+  };
+
   return (
     <header className="flex items-center justify-between p-4 bg-white shadow-md">
       <div className="flex items-center">
-        {/* Menü butonu */}
         <button className="text-gray-800 hover:text-gray-600 transition duration-300 ml-4 md:hidden">
           <CiMenuBurger size={24} />
         </button>
-        {/* Navigasyon Menüsü */}
         <nav className="hidden md:flex items-center space-x-8 ml-8">
           <a
             href="/tumurunler"
@@ -24,17 +60,16 @@ const Header = () => {
             href="#"
             className="text-gray-800 hover:text-gray-600 transition duration-300 text-lg"
           >
-            Giyim
+            Kategoriler
           </a>
           <a
-            href="#"
-            className="text-gray-800 hover:text-gray-600 transition duration-300 text-lg"
+            href="/indirimler"
+            className="text-red-600 hover:text-gray-600 transition duration-300 text-lg"
           >
-            Aksesuar
+            İndirimler
           </a>
         </nav>
       </div>
-      {/* Logo */}
       <h1
         className="text-3xl text-gray-800 cursor-pointer"
         style={{ fontFamily: "Jeju Myeongjo, serif", letterSpacing: "0.2em" }}
@@ -42,7 +77,6 @@ const Header = () => {
       >
         meer
       </h1>
-      {/* Arama Çubuğu ve Kullanıcı Simge */}
       <div className="flex items-center space-x-4">
         <div className="relative flex-grow">
           <input
@@ -54,9 +88,26 @@ const Header = () => {
             <CiSearch size={20} />
           </button>
         </div>
-        <button className="text-gray-800 hover:text-gray-600 transition duration-300">
-          <CiUser size={28} />
-        </button>
+
+        {isLoggedIn ? (
+          <div className="flex items-center space-x-4">
+            <span className="text-gray-800">{userName}</span>
+            <button
+              onClick={handleLogout}
+              className="text-gray-800 hover:text-gray-600 transition duration-300"
+            >
+              Çıkış Yap
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => router.push("/login")}
+            className="text-gray-800 hover:text-gray-600 transition duration-300"
+          >
+            <CiUser size={28} />
+          </button>
+        )}
+
         <button className="text-gray-800 hover:text-gray-600 transition duration-300">
           <CiShoppingCart size={30} />
         </button>
