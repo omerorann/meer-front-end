@@ -43,7 +43,7 @@ const ProductDetailPage = () => {
           <img
             src={product.imgUrl}
             alt={product.name}
-            className="w-full h-auto object-cover rounded-lg shadow-lg border border-black"
+            className="w-full h-auto object-cover rounded-lg shadow-lg border border-gray-800"
           />
           {/* İndirim etiketi */}
           {product.discount && (
@@ -121,7 +121,7 @@ const ProductDetailPage = () => {
           {/* Sepete Ekle butonu */}
           <button
             onClick={() => handleAddToCart(product.id)}
-            className="px-6 py-3 border border-black text-black rounded-lg hover:bg-black hover:text-white transition duration-300 ease-in-out"
+            className="px-6 py-3 border border-black text-black rounded-lg hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out"
           >
             Sepete Ekle
           </button>
@@ -129,7 +129,7 @@ const ProductDetailPage = () => {
           {/* Favorilere Ekle butonu */}
           <button
             onClick={() => handleAddToFavorites(product.id)}
-            className="mt-4 px-6 py-3 bg-transparent text-black rounded-lg hover:bg-black hover:text-white transition duration-300 ease-in-out ml-8"
+            className="mt-4 px-6 py-3 bg-transparent text-black rounded-lg hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out ml-8"
           >
             Favorilere Ekle
           </button>

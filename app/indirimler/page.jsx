@@ -28,11 +28,10 @@ const IndirimliUrunler = () => {
     }
   };
 
-
   return (
     <div className="w-full p-6">
       <h2 className="text-3xl font-bold text-center mb-6">İndirimli Ürünler</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
         {products.map((product) => (
           <div key={product.id} className="flex justify-center">
             <ProductCard product={product} />

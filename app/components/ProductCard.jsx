@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
       />
 
       {/* Üstteki koyu katman */}
-      <div className="absolute inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-50 hover:opacity-0"></div>
+      <div className="absolute inset-0 bg-black transition-opacity duration-300 ease-in-out opacity-30 hover:opacity-0"></div>
 
       {/* İndirim yüzdesi etiketi */}
       {product.discountValue > 0 && (
