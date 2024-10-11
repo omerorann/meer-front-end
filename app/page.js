@@ -1,7 +1,6 @@
 "use client";
 import { useRef } from "react"; // Import useRef to create a ref
 import ProductSlider from "./components/productSlider";
-import Image from "next/image";
 import Footer from "./components/Footer"; // Import the Footer component
 
 export default function Home() {
@@ -19,16 +18,25 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen">
-      {/* Background Wallpaper Section */}
+      {/* Background Video Section */}
       <div className="relative w-full h-screen">
-        <Image
-          src="/images/bg1.jpg"
-          alt="Background"
-          layout="fill"
-          objectFit="cover"
-          quality={100}
-          className="z-0"
-        />
+        {/* Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/videos/videoplayback.mp4" type="video/mp4" 
+          autoPlay
+          loop
+          muted
+          className="absolute inset-0 w-full h-full object-cover"
+          
+          />
+          Your browser does not support the video tag.
+        </video>
+
         {/* Black Overlay */}
         <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
 
