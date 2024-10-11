@@ -32,7 +32,7 @@ export default function Home() {
           loop
           muted
           className="absolute inset-0 w-full h-full object-cover"
-          
+
           />
           Your browser does not support the video tag.
         </video>
@@ -42,7 +42,7 @@ export default function Home() {
 
         {/* Content Section */}
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center">
-          <h1 className="text-6xl text-white font-bold">Meer'a Hoşgeldiniz</h1>
+          <h1 className="text-6xl text-white font-bold text-center">Meer'a Hoşgeldiniz</h1>
           <p className="text-xl text-white mt-4">
             En iyi ürünleri en uygun fiyata satın alın
           </p>
