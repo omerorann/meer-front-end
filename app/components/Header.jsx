@@ -25,9 +25,8 @@ const Header = () => {
       const fetchUserData = async () => {
         setLoading(true);
         try {
-          const response = await axios.post(
+          const response = await axios.get(
             "https://meer-backend-3189f875378d.herokuapp.com/api/auth/me",
-            {}, // POST isteği için boş bir gövde gönderiyoruz
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -44,12 +43,13 @@ const Header = () => {
           setLoading(false);
         }
       };
-
+  
       fetchUserData();
     } else {
       setLoading(false); // Token yoksa yükleniyor durumunu kapat
     }
   }, []);
+  
 
   useEffect(() => {
     const handleScroll = () => {
