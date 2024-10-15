@@ -195,8 +195,7 @@ const Header = () => {
                   isDark ? "text-white" : "text-gray-800"
                 }`}
               />
-              <span className="font-semibold">Tüm Kategoriler</span>{" "}
-              {/* Bu kısım kalın */}
+              <span>Tüm Kategoriler</span>
             </a>
 
             {[
@@ -217,9 +216,12 @@ const Header = () => {
                   category === "İndirimler" ? "text-red-600" : "text-gray-800"
                 }`}
               >
-                <span className="py-2 px-4">{category}</span>{" "}
-                {/* Diğer kategoriler için kalınlık eklenmedi */}
-                <span className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800 scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="py-2 px-4">{category}</span>
+                <span
+                  className={`absolute bottom-0 left-0 right-0 h-1 transition-transform duration-300 group-hover:scale-x-100 ${
+                    category === "İndirimler" ? "bg-red-600" : "bg-gray-800"
+                  } scale-x-0`}
+                />
               </a>
             ))}
           </nav>
