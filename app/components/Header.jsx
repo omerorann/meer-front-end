@@ -1,16 +1,22 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { CiSearch, CiUser, CiMenuBurger, CiShoppingCart } from "react-icons/ci";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, clearUser } from "../../redux/userSlice";
+import {
+  LiaShoppingBagSolid,
+  LiaUserSolid,
+  LiaSearchSolid,
+} from "react-icons/lia";
 import classNames from "classnames";
 
 const Header = () => {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
+  const dispatch = useDispatch();
+  const { token, userName } = useSelector((state) => state.user);
   const [isDark, setIsDark] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isSearchActive, setIsSearchActive] = useState(false); // Arama çubuğu aktif mi?
+  const [showCategories, setShowCategories] = useState(true); // Kategorilerin görünürlüğü
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("isDark");
@@ -20,40 +26,18 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const fetchUserData = async () => {
-        setLoading(true);
-        try {
-          const response = await axios.get(
-            "https://meer-backend-3189f875378d.herokuapp.com/api/auth/me",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setUserName(response.data.name || "User");
-          setIsLoggedIn(true);
-        } catch (error) {
-          console.error("Kullanıcı bilgileri alınamadı:", error);
-          alert("Kullanıcı bilgileri alınamadı. Lütfen tekrar giriş yapın.");
-          setIsLoggedIn(false);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchUserData();
-    } else {
-      setLoading(false); // Token yoksa yükleniyor durumunu kapat
+    const savedToken = localStorage.getItem("token");
+    const savedUserName = localStorage.getItem("userName");
+
+    if (savedToken && savedUserName) {
+      dispatch(setUser({ token: savedToken, userName: savedUserName }));
     }
-  }, []);
-  
+  }, [dispatch]);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsDark(window.scrollY > 50);
+      setShowCategories(window.scrollY === 0); // Sayfa kaydırıldığında kategorileri gizle
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -63,21 +47,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
-    setIsLoggedIn(false);
-    router.push("/login");
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const query = e.target.value;
-    if (query) {
-      router.push(`/search?query=${query}`);
-    }
-  };
-
-  const toggleTheme = () => {
-    setIsDark((prev) => !prev);
-    localStorage.setItem("isDark", JSON.stringify(!isDark));
+    dispatch(clearUser());
   };
 
   return (
@@ -88,77 +58,31 @@ const Header = () => {
       )}
     >
       <div className="flex items-center justify-between p-4">
-        {/* Soldaki Menü ve Linkler */}
-        <div className="flex items-center space-x-4">
-          <button
-            className={`hover:text-gray-600 transition duration-300 ml-4 ${
-              isDark
-                ? "text-white hover:text-gray-400"
-                : "text-gray-800 hover:text-gray-600"
-            }`}
-            aria-label="Açık menü"
-          >
-            <CiMenuBurger size={24} />
-          </button>
-          <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="/tumurunler"
-              className={`transition duration-300 text-lg ${
-                isDark
-                  ? "text-white hover:text-gray-400"
-                  : "text-gray-800 hover:text-gray-600"
-              }`}
-            >
-              Tüm Ürünler
-            </a>
-            <a
-              href="#"
-              className={`transition duration-300 text-lg ${
-                isDark
-                  ? "text-white hover:text-gray-400"
-                  : "text-gray-800 hover:text-gray-600"
-              }`}
-            >
-              Kategoriler
-            </a>
-            <a
-              href="/indirimler"
-              className={`transition duration-300 text-lg ${
-                isDark
-                  ? "text-white hover:text-red-400"
-                  : "text-red-600 hover:text-gray-600"
-              }`}
-            >
-              İndirimler
-            </a>
-          </nav>
-        </div>
-
-        {/* Ortadaki Logo */}
-        <div className="flex-grow flex justify-center">
+        {/* Soldaki Logo */}
+        <div className="flex items-center space-x-4 ml-4">
           <h1
-            className={`text-3xl cursor-pointer hidden md:block transition duration-300 ${
+            className={`text-3xl cursor-pointer transition duration-300 ${
               isDark ? "text-white" : "text-gray-800"
             }`}
-            style={{
-              fontFamily: "Jeju Myeongjo, serif",
-              letterSpacing: "0.2em",
-            }}
             onClick={() => router.push("/")}
           >
             meer
           </h1>
         </div>
 
-        {/* Sağdaki Arama, Kullanıcı ve Sepet */}
-        <div className="flex items-center space-x-4">
-          <form onSubmit={handleSearch} className="relative">
+        {/* Ortada Arama Çubuğu */}
+        <div className="flex justify-center flex-grow">
+          <form className="relative w-full max-w-xl">
             <input
               type="text"
               placeholder="Arama yap..."
-              className={`border border-gray-300 rounded-full pl-4 pr-12 py-2 focus:outline-none focus:border-gray-500 transition duration-300 w-full bg-transparent ${
-                isDark ? "text-white" : "text-gray-800"
+              className={`border rounded-full pl-4 pr-12 py-2 focus:outline-none focus:border-gray-900 transition duration-300 w-full bg-transparent ${
+                isDark
+                  ? "text-white border-white focus:border-gray-400 hover:text-gray-400"
+                  : "text-gray-800 border-gray-500 focus:border-gray-900"
               }`}
+              onFocus={() => setIsSearchActive(true)} // Arama kutusu odaklanınca aktif olur
+              onBlur={() => setIsSearchActive(false)} // Odak dışına çıkınca kapanır
             />
             <button
               type="submit"
@@ -167,52 +91,75 @@ const Header = () => {
                   ? "text-white hover:text-gray-400"
                   : "text-gray-800 hover:text-gray-600"
               }`}
-              aria-label="Arama"
             >
-              <CiSearch size={20} />
+              <LiaSearchSolid size={22} />
             </button>
-          </form>
 
-          {loading ? (
-            <div className="text-gray-800">Yükleniyor...</div>
-          ) : isLoggedIn ? (
-            <div className="flex items-center space-x-4">
-              <CiUser
-                size={28}
-                className={`transition duration-300 ${
-                  isDark ? "text-white" : "text-gray-800"
-                }`}
-              />
-              <span
-                className={`transition duration-300 ${
-                  isDark ? "text-white" : "text-gray-800"
-                }`}
-              >
-                {userName}
-              </span>
-              <button
-                onClick={handleLogout}
-                className={`transition duration-300 ${
+            {/* Arama sonuçları alanı */}
+            <div
+              className={`absolute top-full left-0 w-full shadow-lg rounded-b-lg overflow-hidden transition-all duration-300 ${
+                isSearchActive ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+              }`}
+              style={{ transition: "max-height 0.3s ease, opacity 0.3s ease" }}
+            >
+              <ul
+                className={`p-4 border rounded-b-lg border-gray-800  ${
                   isDark
-                    ? "text-white hover:text-gray-400"
-                    : "text-gray-800 hover:text-gray-600"
+                    ? " text-white border-gray-400"
+                    : "bg-white text-gray-800"
                 }`}
-                aria-label="Çıkış Yap"
               >
-                Çıkış Yap
-              </button>
+                <li
+                  className={`py-2 px-4 cursor-pointer transition duration-300 ${
+                    isDark ? "hover:bg-gray-800" : "hover:bg-gray-200"
+                  }`}
+                >
+                  Sonuç 1
+                </li>
+                <li
+                  className={`py-2 px-4 cursor-pointer transition duration-300 ${
+                    isDark ? "hover:bg-gray-800" : "hover:bg-gray-200"
+                  }`}
+                >
+                  Sonuç 2
+                </li>
+                <li
+                  className={`py-2 px-4 cursor-pointer transition duration-300 ${
+                    isDark ? "hover:bg-gray-800" : "hover:bg-gray-200"
+                  }`}
+                >
+                  Sonuç 3
+                </li>
+              </ul>
             </div>
-          ) : (
+          </form>
+        </div>
+
+        {/* Sağdaki Kullanıcı ve Sepet */}
+        <div className="flex items-center space-x-4">
+          {userName ? (
             <button
-              onClick={() => router.push("/login")}
-              className={`transition duration-300 ${
+              onClick={handleLogout}
+              className={`flex items-center space-x-2 transition duration-300 ${
                 isDark
                   ? "text-white hover:text-gray-400"
                   : "text-gray-800 hover:text-gray-600"
               }`}
-              aria-label="Giriş Yap"
             >
-              Giriş Yap
+              <LiaUserSolid size={28} />
+              <span className="hover:underline">Hesabım</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => router.push("/login")}
+              className={`flex items-center space-x-2 transition duration-300 ${
+                isDark
+                  ? "text-white hover:text-gray-400"
+                  : "text-gray-800 hover:text-gray-600"
+              }`}
+            >
+              <LiaUserSolid size={28} />
+              <span>Giriş Yap</span>
             </button>
           )}
 
@@ -222,12 +169,73 @@ const Header = () => {
                 ? "text-white hover:text-gray-400"
                 : "text-gray-800 hover:text-gray-600"
             }`}
-            aria-label="Sepet"
           >
-            <CiShoppingCart size={30} />
+            <LiaShoppingBagSolid size={28} />
           </button>
         </div>
       </div>
+
+      {/* Kategoriler */}
+      {showCategories && (
+        <div
+          className={`flex justify-center p-2 bg-opacity-20 ${
+            isDark ? "bg-gray-900" : "bg-white"
+          } transition duration-300`}
+        >
+          <nav className="flex space-x-6">
+            <a
+              href="#"
+              className={`transition duration-300 ${
+                isDark
+                  ? "text-white hover:text-gray-400"
+                  : "text-gray-800 hover:text-gray-600"
+              }`}
+            >
+              Elektronik
+            </a>
+            <a
+              href="#"
+              className={`transition duration-300 ${
+                isDark
+                  ? "text-white hover:text-gray-400"
+                  : "text-gray-800 hover:text-gray-600"
+              }`}
+            >
+              Moda
+            </a>
+            <a
+              href="#"
+              className={`transition duration-300 ${
+                isDark
+                  ? "text-white hover:text-gray-400"
+                  : "text-gray-800 hover:text-gray-600"
+              }`}
+            >
+              Ev/Yaşam
+            </a>
+            <a
+              href="#"
+              className={`transition duration-300 ${
+                isDark
+                  ? "text-white hover:text-gray-400"
+                  : "text-gray-800 hover:text-gray-600"
+              }`}
+            >
+              Spor
+            </a>
+            <a
+              href="#"
+              className={`transition duration-300 ${
+                isDark
+                  ? "text-white hover:text-gray-400"
+                  : "text-gray-800 hover:text-gray-600"
+              }`}
+            >
+              Gıda
+            </a>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

@@ -1,28 +1,28 @@
-"use client";
+"use client"; // Bu bileşenin istemci tarafında çalıştığını belirtin
+
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/userSlice"; // Doğru import
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
+    setSuccessMessage(""); // Başarı mesajını sıfırla
     setLoading(true);
 
     if (!formData.email || !formData.password) {
@@ -44,6 +44,21 @@ export default function Login() {
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userName", response.data.user.name);
+
+        // Redux ile kullanıcı bilgisini ayarla
+        dispatch(
+          setUser({
+            token: response.data.token,
+            userName: response.data.user.name,
+          })
+        );
+
+        // Başarı mesajını ayarla
+        setSuccessMessage("Başarıyla giriş yaptınız!");
+
+        // Ana sayfaya yönlendir
+
         router.push("/");
       }
     } catch (error) {
@@ -64,6 +79,10 @@ export default function Login() {
 
         {errorMessage && (
           <p className="text-red-500 text-center mb-4">{errorMessage}</p>
+        )}
+
+        {successMessage && (
+          <p className="text-green-500 text-center mb-4">{successMessage}</p>
         )}
 
         <form onSubmit={handleSubmit}>
