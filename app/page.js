@@ -27,38 +27,27 @@ export default function Home() {
           muted
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/videos/videoplayback.mp4" type="video/mp4" 
-          autoPlay
-          loop
-          muted
-          className="absolute inset-0 w-full h-full object-cover"
-
+          <source
+            src="/videos/videoplayback.mp4"
+            type="video/mp4"
+            autoPlay
+            loop
+            muted
+            className="absolute inset-0 w-full h-full object-cover"
           />
           Your browser does not support the video tag.
         </video>
+        {/* Picture Background */}
+        <img
+          src="/images/background3.jpeg"
+          alt="background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
 
         {/* Black Overlay */}
-        <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+        <div className="absolute inset-0 bg-black opacity-0 z-10"></div>
 
         {/* Content Section */}
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center">
-          <h1 className="text-6xl text-white font-bold text-center">Meer'a Hoşgeldiniz</h1>
-          <p className="text-xl text-white mt-4">
-            En iyi ürünleri en uygun fiyata satın alın
-          </p>
-          <p className="text-white text-md text-center mt-12">
-            En yeni ürünlerimizi keşfedin
-          </p>
-          {/* Keşfet Butonu */}
-          <div className="mt-4">
-            <button
-              onClick={handleScrollToSlider} // Add onClick handler
-              className="border border-white text-white px-4 py-2 rounded-xl hover:bg-white hover:text-gray-900 transition duration-300"
-            >
-              Keşfet
-            </button>
-          </div>
-        </div>
       </div>
 
       {/* Product Slider Section */}

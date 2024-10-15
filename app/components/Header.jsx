@@ -53,7 +53,7 @@ const Header = () => {
   return (
     <header
       className={classNames(
-        "sticky top-0 z-50 bg-opacity-20 backdrop-blur-lg shadow-md transition duration-300",
+        "sticky top-0 z-50 bg-opacity-20 backdrop-blur-lg shadow-md transition duration-300 relative", // relative eklendi
         { "bg-gray-900": isDark, "bg-white": !isDark }
       )}
     >
@@ -97,7 +97,7 @@ const Header = () => {
 
             {/* Arama sonuçları alanı */}
             <div
-              className={`absolute top-full left-0 w-full shadow-lg rounded-b-lg overflow-hidden transition-all duration-300 ${
+              className={`absolute top-full left-0 w-full shadow-lg rounded-b-lg overflow-hidden transition-all duration-300 z-10 ${
                 isSearchActive ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
               }`}
               style={{ transition: "max-height 0.3s ease, opacity 0.3s ease" }}
@@ -177,65 +177,24 @@ const Header = () => {
 
       {/* Kategoriler */}
       {showCategories && (
-        <div
-          className={`flex justify-center p-2 bg-opacity-20 ${
-            isDark ? "bg-gray-900" : "bg-white"
-          } transition duration-300`}
+  <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-white transition duration-300">
+    <nav className="flex justify-center space-x-6">
+      {['Elektronik', 'Moda', 'Ev/Yaşam', 'Spor', 'Gıda'].map((category) => (
+        <a
+          key={category}
+          href="#"
+          className="relative transition duration-300 group"
         >
-          <nav className="flex space-x-6">
-            <a
-              href="#"
-              className={`transition duration-300 ${
-                isDark
-                  ? "text-white hover:text-gray-400"
-                  : "text-gray-800 hover:text-gray-600"
-              }`}
-            >
-              Elektronik
-            </a>
-            <a
-              href="#"
-              className={`transition duration-300 ${
-                isDark
-                  ? "text-white hover:text-gray-400"
-                  : "text-gray-800 hover:text-gray-600"
-              }`}
-            >
-              Moda
-            </a>
-            <a
-              href="#"
-              className={`transition duration-300 ${
-                isDark
-                  ? "text-white hover:text-gray-400"
-                  : "text-gray-800 hover:text-gray-600"
-              }`}
-            >
-              Ev/Yaşam
-            </a>
-            <a
-              href="#"
-              className={`transition duration-300 ${
-                isDark
-                  ? "text-white hover:text-gray-400"
-                  : "text-gray-800 hover:text-gray-600"
-              }`}
-            >
-              Spor
-            </a>
-            <a
-              href="#"
-              className={`transition duration-300 ${
-                isDark
-                  ? "text-white hover:text-gray-400"
-                  : "text-gray-800 hover:text-gray-600"
-              }`}
-            >
-              Gıda
-            </a>
-          </nav>
-        </div>
-      )}
+          <span className="py-2 px-4 text-gray-800 hover:text-black">
+            {category}
+          </span>
+          <span className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800 scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+        </a>
+      ))}
+    </nav>
+  </div>
+)}
+
     </header>
   );
 };
