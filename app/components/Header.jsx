@@ -219,7 +219,7 @@ const Header = () => {
                 <span className="py-2 px-4">{category}</span>
                 <span
                   className={`absolute bottom-0 left-0 right-0 h-1 transition-transform duration-300 group-hover:scale-x-100 ${
-                    category === "İndirimler" ? "bg-red-400" : "bg-gray-800"
+                    category === "İndirimler" ? "bg-red-700" : "bg-gray-800"
                   } scale-x-0`}
                 />
               </a>
