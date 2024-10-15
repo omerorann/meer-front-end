@@ -52,13 +52,13 @@ const Header = () => {
   return (
     <header
       className={classNames(
-        "sticky top-0 z-50 bg-opacity-20 backdrop-blur-lg  transition duration-300 relative", // relative eklendi
+        "sticky top-0 z-50 bg-opacity-20 backdrop-blur-lg transition duration-300 relative",
         { "bg-gray-900": isDark, "bg-white": !isDark }
       )}
     >
       <div className="flex items-center justify-between p-4">
         {/* Soldaki Logo */}
-        <div className="flex items-center space-x-4 ml-4">
+        <div className="flex items-center space-x-4 ml-4 mr-4">
           <h1
             className={`text-3xl cursor-pointer transition duration-300 ${
               isDark ? "text-white" : "text-gray-800"
@@ -102,7 +102,7 @@ const Header = () => {
               style={{ transition: "max-height 0.3s ease, opacity 0.3s ease" }}
             >
               <ul
-                className={`p-4 border rounded-b-lg border-gray-800  ${
+                className={`p-4 border rounded-b-lg border-gray-800 ${
                   isDark
                     ? " text-white border-gray-400"
                     : "bg-white text-gray-800"
@@ -135,7 +135,7 @@ const Header = () => {
         </div>
 
         {/* Sağdaki Kullanıcı ve Sepet */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 ml-4 mr-4">
           {userName ? (
             <button
               onClick={handleLogout}
@@ -146,7 +146,10 @@ const Header = () => {
               }`}
             >
               <LiaUserSolid size={28} />
-              <span className="hover:underline">Hesabım</span>
+              <span className="hidden sm:block hover:underline">
+                Hesabım
+              </span>{" "}
+              {/* Yalnızca sm ve üstü ekranlarda görünür */}
             </button>
           ) : (
             <button
@@ -158,7 +161,8 @@ const Header = () => {
               }`}
             >
               <LiaUserSolid size={28} />
-              <span>Giriş Yap</span>
+              <span className="hidden sm:block">Giriş Yap</span>{" "}
+              {/* Yalnızca sm ve üstü ekranlarda görünür */}
             </button>
           )}
 
@@ -176,9 +180,10 @@ const Header = () => {
 
       {/* Kategoriler */}
       {showCategories && (
-        <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-customGray transition duration-300 hover:bg-opacity-60">
-          <nav className="flex justify-center space-x-6">
+        <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-customGray transition duration-300 hover:bg-opacity-60 overflow-x-auto">
+          <nav className="flex space-x-6 whitespace-nowrap justify-center">
             {[
+              "Tüm Ürünler",
               "Moda",
               "Elektronik",
               "Ev & Yaşam",
@@ -187,6 +192,7 @@ const Header = () => {
               "Kozmetik",
               "Aksesuar",
               "Hobi",
+              "İndirimler",
             ].map((category) => (
               <a
                 key={category}
