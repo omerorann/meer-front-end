@@ -7,6 +7,7 @@ import {
   LiaShoppingBagSolid,
   LiaUserSolid,
   LiaSearchSolid,
+  LiaBarsSolid,
 } from "react-icons/lia";
 import classNames from "classnames";
 
@@ -146,7 +147,7 @@ const Header = () => {
               }`}
             >
               <LiaUserSolid size={28} />
-              <span className="hidden sm:block hover:underline">
+              <span className="hidden sm:block font-semibold">
                 Hesabım
               </span>{" "}
               {/* Yalnızca sm ve üstü ekranlarda görünür */}
@@ -161,7 +162,9 @@ const Header = () => {
               }`}
             >
               <LiaUserSolid size={28} />
-              <span className="hidden sm:block">Giriş Yap</span>{" "}
+              <span className="hidden sm:block font-semibold">
+                Giriş Yap
+              </span>{" "}
               {/* Yalnızca sm ve üstü ekranlarda görünür */}
             </button>
           )}
@@ -182,11 +185,22 @@ const Header = () => {
       {showCategories && (
         <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-customGray transition duration-300 hover:bg-opacity-60 overflow-x-auto">
           <nav className="flex space-x-6 whitespace-nowrap xl:justify-center lg:justify-evenly">
+            <a
+              href="/tumurunler"
+              className="flex items-center space-x-2 cursor-pointer transition duration-300"
+            >
+              <LiaBarsSolid
+                size={20}
+                className={`transition duration-300 ${
+                  isDark ? "text-white" : "text-gray-800"
+                }`}
+              />
+              <span className="font-semibold">Tüm Kategoriler</span>{" "}
+              {/* Bu kısım kalın */}
+            </a>
+
             {[
-              "Tüm Ürünler",
-              "Erkek",
-              "Kadın",
-              "Çocuk",
+              "İndirimler",
               "Moda",
               "Elektronik",
               "Ev & Yaşam",
@@ -195,22 +209,16 @@ const Header = () => {
               "Kozmetik",
               "Aksesuar",
               "Hobi",
-              "İndirimler",
             ].map((category) => (
               <a
                 key={category}
-                href={
-                  category === "İndirimler"
-                    ? "/indirimler"
-                    : category === "Tüm Ürünler"
-                    ? "/tumurunler"
-                    : "#"
-                }
+                href={category === "İndirimler" ? "/indirimler" : "#"}
                 className={`relative transition duration-300 group ${
                   category === "İndirimler" ? "text-red-600" : "text-gray-800"
                 }`}
               >
-                <span className="py-2 px-4">{category}</span>
+                <span className="py-2 px-4">{category}</span>{" "}
+                {/* Diğer kategoriler için kalınlık eklenmedi */}
                 <span className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800 scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
               </a>
             ))}
