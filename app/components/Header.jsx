@@ -36,7 +36,6 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsDark(window.scrollY > 50);
       setShowCategories(window.scrollY === 0); // Sayfa kaydırıldığında kategorileri gizle
     };
 
@@ -53,7 +52,7 @@ const Header = () => {
   return (
     <header
       className={classNames(
-        "sticky top-0 z-50 bg-opacity-20 backdrop-blur-lg shadow-md transition duration-300 relative", // relative eklendi
+        "sticky top-0 z-50 bg-opacity-20 backdrop-blur-lg  transition duration-300 relative", // relative eklendi
         { "bg-gray-900": isDark, "bg-white": !isDark }
       )}
     >
@@ -177,24 +176,25 @@ const Header = () => {
 
       {/* Kategoriler */}
       {showCategories && (
-  <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-white transition duration-300">
-    <nav className="flex justify-center space-x-6">
-      {['Elektronik', 'Moda', 'Ev/Yaşam', 'Spor', 'Gıda'].map((category) => (
-        <a
-          key={category}
-          href="#"
-          className="relative transition duration-300 group"
-        >
-          <span className="py-2 px-4 text-gray-800 hover:text-black">
-            {category}
-          </span>
-          <span className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800 scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
-        </a>
-      ))}
-    </nav>
-  </div>
-)}
-
+        <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-customGray transition duration-300 hover:bg-opacity-60">
+          <nav className="flex justify-center space-x-6">
+            {["Elektronik", "Moda", "Ev/Yaşam", "Spor", "Gıda"].map(
+              (category) => (
+                <a
+                  key={category}
+                  href="#"
+                  className="relative transition duration-300 group"
+                >
+                  <span className="py-2 px-4 text-gray-800 hover:text-black">
+                    {category}
+                  </span>
+                  <span className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800 scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+                </a>
+              )
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

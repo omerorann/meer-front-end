@@ -39,7 +39,7 @@ export default function Home() {
         </video>
         {/* Picture Background */}
         <img
-          src="/images/background3.jpeg"
+          src="/images/background4.jpeg"
           alt="background"
           className="absolute inset-0 w-full h-full object-cover"
         />

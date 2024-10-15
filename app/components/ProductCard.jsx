@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
       onClick={() => router.push(`/productDetails/${product.id}`)} // Ürün detay sayfasına yönlendir
     >
       <img
-        src={product.imgUrl}
+        src={product.productImg}
         alt={product.name}
         className="absolute inset-0 w-full h-full object-cover transition-all duration-200 ease-in-out hover:brightness-110" // Resmi parlak göstermek için hover ile brightness ekleniyor
       />
