@@ -178,20 +178,27 @@ const Header = () => {
       {showCategories && (
         <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-customGray transition duration-300 hover:bg-opacity-60">
           <nav className="flex justify-center space-x-6">
-            {["Elektronik", "Moda", "Ev/Yaşam", "Spor", "Gıda"].map(
-              (category) => (
-                <a
-                  key={category}
-                  href="#"
-                  className="relative transition duration-300 group"
-                >
-                  <span className="py-2 px-4 text-gray-800 hover:text-black">
-                    {category}
-                  </span>
-                  <span className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800 scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
-                </a>
-              )
-            )}
+            {[
+              "Moda",
+              "Elektronik",
+              "Ev & Yaşam",
+              "Spor",
+              "Gıda",
+              "Kozmetik",
+              "Aksesuar",
+              "Hobi",
+            ].map((category) => (
+              <a
+                key={category}
+                href="#"
+                className="relative transition duration-300 group"
+              >
+                <span className="py-2 px-4 text-gray-800 hover:text-black">
+                  {category}
+                </span>
+                <span className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800 scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+              </a>
+            ))}
           </nav>
         </div>
       )}
