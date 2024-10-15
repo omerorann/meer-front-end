@@ -21,19 +21,19 @@ export default function Home() {
       {/* Background Image Section */}
       <div
         className="relative w-full 
-        h-[400px]  // default height for small screens
-        sm:h-[500px] // height for small screens and above
-        md:h-[600px] // height for medium screens and above
-        lg:h-[700px] // height for large screens and above
-        xl:h-[800px]" // height for extra large screens and above
+  aspect-[16/9] // Bu, yüksekliği genişliğe göre ayarlar
+  sm:aspect-[4/3] // Küçük ekranlar ve üzeri için oranı ayarlayın
+  md:aspect-[3/2] // Orta ekranlar ve üzeri için oranı ayarlayın
+  lg:aspect-[16/9] // Büyük ekranlar için oranı ayarlayın
+  xl:aspect-[21/9]" // Ekstra büyük ekranlar için oranı ayarlayın
         style={{
           backgroundImage: 'url("/images/background4.jpeg")',
-          backgroundSize: "contain", // Ensures the image scales down to fit
-          backgroundPosition: "center", // Centers the image
-          backgroundRepeat: "no-repeat", // Prevents the image from repeating
+          backgroundSize: "cover", // Resmin uygun bir şekilde ölçeklenmesini sağlar
+          backgroundPosition: "center", // Resmi ortalar
+          backgroundRepeat: "no-repeat", // Resmin tekrar etmesini engeller
         }}
       >
-        {/* This div serves as the background */}
+        {/* Bu div arka plan olarak görev yapar */}
       </div>
 
       {/* Product Slider Section */}

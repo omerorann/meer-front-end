@@ -181,7 +181,7 @@ const Header = () => {
       {/* Kategoriler */}
       {showCategories && (
         <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-customGray transition duration-300 hover:bg-opacity-60 overflow-x-auto">
-          <nav className="flex space-x-6 whitespace-nowrap justify-evenly">
+          <nav className="flex space-x-6 whitespace-nowrap xl:justify-center lg:justify-evenly">
             {[
               "Tüm Ürünler",
               "Erkek",
@@ -205,9 +205,9 @@ const Header = () => {
                     : category === "Tüm Ürünler"
                     ? "/tumurunler"
                     : "#"
-                } // "Tüm Ürünler" için linki ayarlayın
+                }
                 className={`relative transition duration-300 group ${
-                  category === "İndirimler" ? "text-red-600" : "text-gray-800" // "İndirimler" kırmızı renk
+                  category === "İndirimler" ? "text-red-600" : "text-gray-800"
                 }`}
               >
                 <span className="py-2 px-4">{category}</span>
