@@ -36,7 +36,7 @@ const ProductDetailPage = () => {
     : product.price;
 
   return (
-    <div className="container mx-auto px-4 py-8 mr-8 mt-8">
+    <div className="container mx-auto px-4 py-8 mr-8">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Ürün görseli */}
         <div className="relative w-full md:w-1/3">

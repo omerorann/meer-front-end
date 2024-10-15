@@ -22,7 +22,9 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={`${quicksand.variable} antialiased`}>
           <Header />
-          {children}
+          <div className="mt-8"> {/* children'a margin-top ekledik */}
+            {children}
+          </div>
           <Footer />
         </body>
       </html>

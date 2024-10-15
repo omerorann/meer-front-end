@@ -181,9 +181,12 @@ const Header = () => {
       {/* Kategoriler */}
       {showCategories && (
         <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-customGray transition duration-300 hover:bg-opacity-60 overflow-x-auto">
-          <nav className="flex space-x-6 whitespace-nowrap justify-center">
+          <nav className="flex space-x-6 whitespace-nowrap justify-evenly">
             {[
               "Tüm Ürünler",
+              "Erkek",
+              "Kadın",
+              "Çocuk",
               "Moda",
               "Elektronik",
               "Ev & Yaşam",
@@ -196,12 +199,18 @@ const Header = () => {
             ].map((category) => (
               <a
                 key={category}
-                href="#"
-                className="relative transition duration-300 group"
+                href={
+                  category === "İndirimler"
+                    ? "/indirimler"
+                    : category === "Tüm Ürünler"
+                    ? "/tumurunler"
+                    : "#"
+                } // "Tüm Ürünler" için linki ayarlayın
+                className={`relative transition duration-300 group ${
+                  category === "İndirimler" ? "text-red-600" : "text-gray-800" // "İndirimler" kırmızı renk
+                }`}
               >
-                <span className="py-2 px-4 text-gray-800 hover:text-black">
-                  {category}
-                </span>
+                <span className="py-2 px-4">{category}</span>
                 <span className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800 scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
               </a>
             ))}
