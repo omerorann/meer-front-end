@@ -21,7 +21,7 @@ export default function Home() {
       {/* Background Video Section */}
       <div className="relative w-full h-screen">
         {/* Video Background */}
-        <video
+        {/* <video
           autoPlay
           loop
           muted
@@ -37,6 +37,7 @@ export default function Home() {
           />
           Your browser does not support the video tag.
         </video>
+        */}
         {/* Picture Background */}
         <img
           src="/images/background4.jpeg"
