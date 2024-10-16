@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ProductCard = ({ product }) => {
+  const router = useRouter();
   const [showTooltip, setShowTooltip] = useState(false); // Tooltip durumu için state
 
   // İndirimli fiyatı hesapla (indirim varsa)
@@ -13,9 +14,9 @@ const ProductCard = ({ product }) => {
       : null;
 
   return (
-    <Link
-      href={`/productDetails/${product.id}`}
+    <div
       className="relative w-64 h-96 rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-200 ease-in-out hover:scale-105"
+      onClick={() => router.push(`/productDetails/${product.id}`)} // Ürün detay sayfasına yönlendir
     >
       <img
         src={product.productImg}
@@ -46,11 +47,7 @@ const ProductCard = ({ product }) => {
           </h1>
           <div
             className={`absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-auto bg-gray-800 text-white text-xs p-2 rounded shadow-lg transition-all duration-300 ease-in-out 
-            ${
-              showTooltip
-                ? "transform scale-90 opacity-100"
-                : "transform scale-0 opacity-0"
-            }
+            ${showTooltip ? 'transform scale-90 opacity-100' : 'transform scale-0 opacity-0'}
             `}
             style={{
               transformOrigin: "bottom", // Tooltip'in büyüme merkezi
@@ -61,25 +58,19 @@ const ProductCard = ({ product }) => {
             {product.name} {/* Tam metin burada gösteriliyor */}
           </div>
         </div>
-        <p className="text-sm mt-2">
-          {product.brand || "Ürün markası mevcut değil."}
-        </p>
+        <p className="text-sm mt-2">{product.brand || "Ürün markası mevcut değil."}</p>
         <div className="mt-2">
           {discountedPrice ? ( // İndirimli fiyat var mı kontrolü
             <>
-              <span className="text-lg font-semibold">
-                {discountedPrice} TL
-              </span>
-              <span className="text-sm line-through text-gray-300 ml-2">
-                {product.price} TL
-              </span>
+              <span className="text-lg font-semibold">{discountedPrice} TL</span>
+              <span className="text-sm line-through text-gray-300 ml-2">{product.price} TL</span>
             </>
           ) : (
             <p className="text-lg font-semibold">{product.price} TL</p>
           )}
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
