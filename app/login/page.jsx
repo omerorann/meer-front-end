@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/userSlice"; // Doğru import
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -132,9 +133,9 @@ export default function Login() {
 
         <p className="mt-4 text-center">
           Don&apos;t have an account?{" "}
-          <a href="/register" className="text-blue-500 hover:underline">
+          <Link href="/register" className="text-blue-500 hover:underline">
             Register
-          </a>
+          </Link>
         </p>
       </div>
     </div>

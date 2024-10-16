@@ -12,8 +12,8 @@ const quicksand = Quicksand({
 });
 
 export const metadata = {
-  title: "m e e r",
-  description: "m e e r - E-ticaret sitesi",
+  title: "MEER - Türkiye",
+  description: "Türkiye'nin yeni online alışveriş platformu.",
 };
 
 export default function RootLayout({ children }) {
@@ -22,7 +22,9 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={`${quicksand.variable} antialiased`}>
           <Header />
-          <div className="mt-8"> {/* children'a margin-top ekledik */}
+          <div className="mt-8">
+            {" "}
+            {/* children'a margin-top ekledik */}
             {children}
           </div>
           <Footer />

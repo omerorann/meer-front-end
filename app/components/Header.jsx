@@ -10,6 +10,7 @@ import {
   LiaBarsSolid,
 } from "react-icons/lia";
 import classNames from "classnames";
+import Link from "next/link";
 
 const Header = () => {
   const router = useRouter();
@@ -153,8 +154,8 @@ const Header = () => {
               {/* Yalnızca sm ve üstü ekranlarda görünür */}
             </button>
           ) : (
-            <button
-              onClick={() => router.push("/login")}
+            <Link
+              href="/login"
               className={`flex items-center space-x-2 transition duration-300 ${
                 isDark
                   ? "text-white hover:text-gray-400"
@@ -166,7 +167,7 @@ const Header = () => {
                 Giriş Yap
               </span>{" "}
               {/* Yalnızca sm ve üstü ekranlarda görünür */}
-            </button>
+            </Link>
           )}
 
           <button
@@ -185,7 +186,7 @@ const Header = () => {
       {showCategories && (
         <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-customGray transition duration-300 hover:bg-opacity-60 overflow-x-auto">
           <nav className="flex space-x-6 whitespace-nowrap xl:justify-center lg:justify-evenly">
-            <a
+            <Link
               href="/tumurunler"
               className="flex items-center space-x-2 cursor-pointer transition duration-300"
             >
@@ -196,7 +197,7 @@ const Header = () => {
                 }`}
               />
               <span>Tüm Kategoriler</span>
-            </a>
+            </Link>
 
             {[
               "İndirimler",
@@ -209,7 +210,7 @@ const Header = () => {
               "Aksesuar",
               "Hobi",
             ].map((category) => (
-              <a
+              <Link
                 key={category}
                 href={category === "İndirimler" ? "/indirimler" : "#"}
                 className={`relative transition duration-300 group ${
@@ -222,7 +223,7 @@ const Header = () => {
                     category === "İndirimler" ? "bg-red-700" : "bg-gray-800"
                   } scale-x-0`}
                 />
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
