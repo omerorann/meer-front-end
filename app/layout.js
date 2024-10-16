@@ -12,8 +12,8 @@ const quicksand = Quicksand({
 });
 
 export const metadata = {
-  title: "m e e r",
-  description: "m e e r - E-ticaret sitesi",
+  title: "MEER - Türkiye",
+  description: "MEER, Türkiye'nin yeni alışveriş platformu.",
 };
 
 export default function RootLayout({ children }) {

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 const ProductDetailPage = () => {
   const { id } = useParams(); // Ürün ID'sini URL'den almak
@@ -55,8 +56,16 @@ const ProductDetailPage = () => {
 
         {/* Ürün detayları */}
         <div className="w-full md:w-1/2">
-          <h1 className="text-3xl font-semibold mb-4">{product.name}</h1>
-          <p className="text-lg text-gray-600 mb-6">{product.description}</p>
+          <h1 className="text-3xl font-semibold mb-2">{product.name}</h1>
+          <Link
+            href={`/brand/${product.brand}`}
+            className="text-xl text-gray-800 mb-4 font-semibold cursor-pointer transition duration-300 ease-in-out inline-block hover:text-black"
+          >
+            {product.brand}
+          </Link>
+          <p className="text-lg text-gray-600 mt-2 mb-6">
+            {product.description}
+          </p>
 
           <div className="flex items-center mb-6">
             <span className="text-2xl font-bold text-gray-800">

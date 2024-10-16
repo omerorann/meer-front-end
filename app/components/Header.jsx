@@ -10,14 +10,18 @@ import {
   LiaBarsSolid,
 } from "react-icons/lia";
 import classNames from "classnames";
+import Link from "next/link";
 
 const Header = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { token, userName } = useSelector((state) => state.user);
   const [isDark, setIsDark] = useState(false);
-  const [isSearchActive, setIsSearchActive] = useState(false); // Arama çubuğu aktif mi?
-  const [showCategories, setShowCategories] = useState(true); // Kategorilerin görünürlüğü
+  const [isSearchActive, setIsSearchActive] = useState(false);
+  const [showCategories, setShowCategories] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const scrollThreshold = 100;
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("isDark");
@@ -37,12 +41,26 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowCategories(window.scrollY === 0); // Sayfa kaydırıldığında kategorileri gizle
+      const currentScrollY = window.scrollY;
+
+      // Sayfa en üstteyse header'ı göster
+      if (currentScrollY === 0) {
+        setIsHeaderVisible(true);
+      } else if (currentScrollY > scrollThreshold && window.innerWidth < 640) {
+        if (currentScrollY > lastScrollY) {
+          setIsHeaderVisible(false); // Aşağı kaydırıldığında header'ı gizle
+        } else {
+          setIsHeaderVisible(true); // Yukarı kaydırıldığında header'ı göster
+        }
+      }
+
+      setLastScrollY(currentScrollY);
+      setShowCategories(currentScrollY < 20);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -53,21 +71,26 @@ const Header = () => {
   return (
     <header
       className={classNames(
-        "sticky top-0 z-50 bg-opacity-20 backdrop-blur-lg transition duration-300 relative",
-        { "bg-gray-900": isDark, "bg-white": !isDark }
+        "sticky top-0 z-50 bg-opacity-20 backdrop-blur-lg transition-transform duration-300 ease-in-out",
+        {
+          "bg-gray-900": isDark,
+          "bg-white": !isDark,
+          "transform -translate-y-full": !isHeaderVisible,
+          "transform translate-y-0": isHeaderVisible,
+        }
       )}
     >
       <div className="flex items-center justify-between p-4">
         {/* Soldaki Logo */}
         <div className="flex items-center space-x-4 ml-4 mr-4">
-          <h1
+          <Link
             className={`text-3xl cursor-pointer transition duration-300 ${
               isDark ? "text-white" : "text-gray-800"
             }`}
-            onClick={() => router.push("/")}
+            href="/"
           >
             meer
-          </h1>
+          </Link>
         </div>
 
         {/* Ortada Arama Çubuğu */}
@@ -81,8 +104,8 @@ const Header = () => {
                   ? "text-white border-white focus:border-gray-400 hover:text-gray-400"
                   : "text-gray-800 border-gray-500 focus:border-gray-900"
               }`}
-              onFocus={() => setIsSearchActive(true)} // Arama kutusu odaklanınca aktif olur
-              onBlur={() => setIsSearchActive(false)} // Odak dışına çıkınca kapanır
+              onFocus={() => setIsSearchActive(true)}
+              onBlur={() => setIsSearchActive(false)}
             />
             <button
               type="submit"
@@ -105,7 +128,7 @@ const Header = () => {
               <ul
                 className={`p-4 border rounded-b-lg border-gray-800 ${
                   isDark
-                    ? " text-white border-gray-400"
+                    ? "text-white border-gray-400"
                     : "bg-white text-gray-800"
                 }`}
               >
@@ -147,14 +170,11 @@ const Header = () => {
               }`}
             >
               <LiaUserSolid size={28} />
-              <span className="hidden sm:block font-semibold">
-                Hesabım
-              </span>{" "}
-              {/* Yalnızca sm ve üstü ekranlarda görünür */}
+              <span className="hidden sm:block font-semibold">Hesabım</span>
             </button>
           ) : (
-            <button
-              onClick={() => router.push("/login")}
+            <Link
+              href="/login"
               className={`flex items-center space-x-2 transition duration-300 ${
                 isDark
                   ? "text-white hover:text-gray-400"
@@ -162,11 +182,8 @@ const Header = () => {
               }`}
             >
               <LiaUserSolid size={28} />
-              <span className="hidden sm:block font-semibold">
-                Giriş Yap
-              </span>{" "}
-              {/* Yalnızca sm ve üstü ekranlarda görünür */}
-            </button>
+              <span className="hidden sm:block font-semibold">Giriş Yap</span>
+            </Link>
           )}
 
           <button
@@ -185,7 +202,7 @@ const Header = () => {
       {showCategories && (
         <div className="absolute top-full left-0 right-0 p-2 bg-opacity-0 bg-customGray transition duration-300 hover:bg-opacity-60 overflow-x-auto">
           <nav className="flex space-x-6 whitespace-nowrap xl:justify-center lg:justify-evenly">
-            <a
+            <Link
               href="/tumurunler"
               className="flex items-center space-x-2 cursor-pointer transition duration-300"
             >
@@ -196,7 +213,7 @@ const Header = () => {
                 }`}
               />
               <span>Tüm Kategoriler</span>
-            </a>
+            </Link>
 
             {[
               "İndirimler",
