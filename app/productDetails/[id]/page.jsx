@@ -11,6 +11,7 @@ const ProductDetailPage = () => {
   const [selectedSize, setSelectedSize] = useState(""); // Seçilen beden
   const [quantity, setQuantity] = useState(1); // Seçilen adet
   const router = useRouter();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     fetchProduct();
@@ -36,6 +37,9 @@ const ProductDetailPage = () => {
     ? product.price * (1 - product.discountValue / 100)
     : product.price;
 
+  const handleToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
   return (
     <div className="container mx-auto px-4 py-8 mr-8">
       <div className="flex flex-col md:flex-row gap-6">
@@ -63,9 +67,33 @@ const ProductDetailPage = () => {
           >
             {product.brand}
           </Link>
-          <p className="text-lg text-gray-600 mt-2 mb-6">
-            {product.description}
-          </p>
+          <div className="mb-4">
+            <div
+              className={`text-lg text-gray-600 mt-2 transition-all duration-700 ease-in-out overflow-hidden transform ${
+                isExpanded
+                  ? "max-h-[1000px] translate-y-0 opacity-100"
+                  : "max-h-[54px] -translate-y-2 opacity-90 line-clamp-2"
+              }`}
+            >
+              {product.description}
+            </div>
+            {product.description.length > 190 && !isExpanded && (
+              <button
+                onClick={handleToggle}
+                className="text-black-500 opacity-50 hover:text-black hover:opacity-100 transition duration-300"
+              >
+                Daha fazla göster
+              </button>
+            )}
+            {isExpanded && (
+              <button
+                onClick={handleToggle}
+                className="text-black-500 opacity-50 hover:text-black hover:opacity-100 transition duration-300"
+              >
+                Kapat
+              </button>
+            )}
+          </div>
 
           <div className="flex items-center mb-6">
             <span className="text-2xl font-bold text-gray-800">
@@ -138,7 +166,7 @@ const ProductDetailPage = () => {
           {/* Favorilere Ekle butonu */}
           <button
             onClick={() => handleAddToFavorites(product.id)}
-            className="mt-4 px-6 py-3 bg-transparent text-black rounded-lg hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out ml-8"
+            className="mt-4 px-6 py-3 bg-transparent text-black rounded-lg hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out ml-4"
           >
             Favorilere Ekle
           </button>

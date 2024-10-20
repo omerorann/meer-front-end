@@ -161,8 +161,8 @@ const Header = () => {
         {/* Sağdaki Kullanıcı ve Sepet */}
         <div className="flex items-center space-x-4 ml-4 mr-4">
           {userName ? (
-            <button
-              onClick={handleLogout}
+            <Link
+              href={`/hesabim`}
               className={`flex items-center space-x-2 transition duration-300 ${
                 isDark
                   ? "text-white hover:text-gray-400"
@@ -171,7 +171,7 @@ const Header = () => {
             >
               <LiaUserSolid size={28} />
               <span className="hidden sm:block font-semibold">Hesabım</span>
-            </button>
+            </Link>
           ) : (
             <Link
               href="/login"

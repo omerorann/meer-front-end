@@ -39,9 +39,7 @@ export default function Home() {
       {/* Product Slider Section */}
       <div ref={sliderRef} className="relative">
         {/* Product Slider Component */}
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mt-8">Yeni Ürünler</h2>
-        </div>
+
         <ProductSlider />
       </div>
 

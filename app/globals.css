@@ -3,8 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --background: #F4F4F9; /* Açık gri arka plan */
+  --background: #f4f4f9; /* Açık gri arka plan */
   --foreground: #333333; /* Koyu gri metin */
+}
+/* styles/globals.css veya uygulamanızda uygun bir CSS dosyasına ekleyin */
+
+.slick-slide {
+  margin: 0 10px; /* Kaydırma aralığı */
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 1; /* Butonların üstte görünmesi için */
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black; /* Ok simgeleri için renk */
 }
 
 body {

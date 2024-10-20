@@ -1,9 +1,7 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 
 const AllProductsPage = () => {
@@ -27,7 +25,7 @@ const AllProductsPage = () => {
   return (
     <div className="w-full p-6">
       <h2 className="text-3xl font-bold text-center mb-6">Tüm Ürünler</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"> {/* Sütun sayısını güncelledim */}
         {products.map((product) => (
           <div key={product.id} className="flex justify-center">
             <ProductCard product={product} />
