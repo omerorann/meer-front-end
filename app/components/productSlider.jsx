@@ -1,6 +1,12 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y, EffectFade } from "swiper/modules";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  EffectFade,
+} from "swiper/modules";
 import "swiper/css"; // Swiper CSS yüklemesi
 import ProductCard from "./ProductCard";
 
@@ -17,7 +23,7 @@ const ProductSlider = ({ productData, prevButtonId, nextButtonId }) => {
     <div className="w-full pb-10 px-2 lg:px-0">
       <div className="w-full">
         <Swiper
-          spaceBetween={10}
+          spaceBetween={5}
           slidesPerView={7}
           slidesPerGroup={4}
           navigation={{
@@ -28,8 +34,8 @@ const ProductSlider = ({ productData, prevButtonId, nextButtonId }) => {
           loop={true}
           breakpoints={{
             0: {
-              slidesPerView: 1,
-              spaceBetween: 10,
+              slidesPerView: 2,
+              spaceBetween: 5,
               slidesPerGroup: 2,
             },
             480: {
@@ -51,7 +57,7 @@ const ProductSlider = ({ productData, prevButtonId, nextButtonId }) => {
         >
           {shuffledProducts.map((item, index) => (
             <SwiperSlide key={index}>
-              <div className="scale-90">
+              <div className="scale-95">
                 <ProductCard product={item} />
               </div>
             </SwiperSlide>

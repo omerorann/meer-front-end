@@ -1,29 +1,28 @@
 "use client";
 
 import React, { useState } from "react";
-import PropTypes from "prop-types"; // PropTypes kütüphanesini ekleyin
+import PropTypes from "prop-types"; 
 import Link from "next/link";
 
 const ProductCard = ({ product }) => {
   const [showTooltip, setShowTooltip] = useState(false);
-  const [imgError, setImgError] = useState(false); // Resim yüklenme hatası durumu
+  const [imgError, setImgError] = useState(false); 
 
-  // İndirimli fiyatı hesapla
   const discountedPrice =
     product.discountValue > 0
       ? (product.price * (1 - product.discountValue / 100)).toFixed(2)
       : null;
 
   return (
-    <div className="group flex scale-100 sm:scale-90 lg:scale-100">
+    <div className="group flex flex-col w-full max-w-xs sm:max-w-sm lg:max-w-md mx-auto h-auto">
       <Link
         href={`/productDetails/${product.id}`}
-        className="relative w-64 h-96 rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-200 ease-in-out hover:scale-105"
+        className="relative w-full h-96 rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-200 ease-in-out hover:scale-105"
       >
         <img
-          src={imgError ? "/path/to/placeholder.jpg" : product.productImg} // Yedek resim göster
+          src={imgError ? "/path/to/placeholder.jpg" : product.productImg}
           alt={product.name}
-          onError={() => setImgError(true)} // Resim yüklenmezse hata durumu
+          onError={() => setImgError(true)} 
           className="absolute inset-0 w-full h-full object-cover transition-all duration-200 ease-in-out hover:brightness-110"
         />
 
@@ -38,7 +37,7 @@ const ProductCard = ({ product }) => {
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-60 text-white">
           <div className="relative">
             <h1
-              className="text-xl font-semibold overflow-hidden whitespace-nowrap text-ellipsis cursor-pointer"
+              className="text-lg sm:text-xl font-semibold overflow-hidden whitespace-nowrap text-ellipsis cursor-pointer"
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
             >
@@ -56,7 +55,7 @@ const ProductCard = ({ product }) => {
                 transformOrigin: "bottom",
                 whiteSpace: "nowrap",
                 maxWidth: "500px",
-                zIndex: 10, // Tooltip'in z-index'ini artır
+                zIndex: 10,
               }}
             >
               {product.name}
@@ -68,7 +67,7 @@ const ProductCard = ({ product }) => {
           <div className="mt-2">
             {discountedPrice ? (
               <>
-                <span className="text-lg font-semibold">
+                <span className="text-lg sm:text-xl font-semibold">
                   {discountedPrice} TL
                 </span>
                 <span className="text-sm line-through text-gray-300 ml-2">
@@ -76,7 +75,7 @@ const ProductCard = ({ product }) => {
                 </span>
               </>
             ) : (
-              <p className="text-lg font-semibold">{product.price} TL</p>
+              <p className="text-lg sm:text-xl font-semibold">{product.price} TL</p>
             )}
           </div>
         </div>
@@ -85,7 +84,6 @@ const ProductCard = ({ product }) => {
   );
 };
 
-// PropTypes ile tip kontrolü
 ProductCard.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number.isRequired,

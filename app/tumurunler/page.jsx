@@ -25,7 +25,7 @@ const AllProductsPage = () => {
   return (
     <div className="w-full p-6">
       <h2 className="text-3xl font-bold text-center mb-6">Tüm Ürünler</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"> {/* Sütun sayısını güncelledim */}
+      <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 lg:gap-x-16"> {/* Sütun sayısını güncelledim */}
         {products.map((product) => (
           <div key={product.id} className="flex justify-center">
             <ProductCard product={product} />
