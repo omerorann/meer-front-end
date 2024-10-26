@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ Email: "", Password: "" });
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -25,7 +25,7 @@ export default function Login() {
     setSuccessMessage(""); // Başarı mesajını sıfırla
     setLoading(true);
 
-    if (!formData.email || !formData.password) {
+    if (!formData.Email || !formData.Password) {
       setErrorMessage("Email and password are required.");
       setLoading(false);
       return;
@@ -41,6 +41,8 @@ export default function Login() {
           },
         }
       );
+
+      console.log("API Yanıtı:", response.data); // Yanıtı kontrol et
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
@@ -58,11 +60,11 @@ export default function Login() {
         setSuccessMessage("Başarıyla giriş yaptınız!");
 
         // Ana sayfaya yönlendir
-
         router.push("/");
       }
     } catch (error) {
       if (error.response) {
+        console.log("API Hata Detayı:", error.response.data); // Hata detayını kontrol et
         setErrorMessage(error.response.data.message || "Login failed.");
       } else {
         setErrorMessage("An error occurred. Please try again.");
@@ -93,8 +95,8 @@ export default function Login() {
             <input
               type="email"
               id="email"
-              name="email"
-              value={formData.email}
+              name="Email"
+              value={formData.Email}
               onChange={handleInputChange}
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -111,8 +113,8 @@ export default function Login() {
             <input
               type="password"
               id="password"
-              name="password"
-              value={formData.password}
+              name="Password"
+              value={formData.Password}
               onChange={handleInputChange}
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
