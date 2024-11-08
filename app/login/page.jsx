@@ -1,18 +1,18 @@
-"use client"; // Bu bileşenin istemci tarafında çalıştığını belirtin
+'use client'; // Bu bileşenin istemci tarafında çalıştığını belirtin
 
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../redux/userSlice"; // Doğru import
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/userSlice'; // Doğru import
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [formData, setFormData] = useState({ Email: "", Password: "" });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [formData, setFormData] = useState({ Email: '', Password: '' });
+  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,32 +21,32 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage(""); // Başarı mesajını sıfırla
+    setErrorMessage('');
+    setSuccessMessage(''); // Başarı mesajını sıfırla
     setLoading(true);
 
     if (!formData.Email || !formData.Password) {
-      setErrorMessage("Email and password are required.");
+      setErrorMessage('Email and password are required.');
       setLoading(false);
       return;
     }
 
     try {
       const response = await axios.post(
-        "https://meer-backend-3189f875378d.herokuapp.com/api/auth/login",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
         formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
 
-      console.log("API Yanıtı:", response.data); // Yanıtı kontrol et
+      console.log('API Yanıtı:', response.data); // Yanıtı kontrol et
 
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userName", response.data.user.name);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userName', response.data.user.name);
 
         // Redux ile kullanıcı bilgisini ayarla
         dispatch(
@@ -57,17 +57,17 @@ export default function Login() {
         );
 
         // Başarı mesajını ayarla
-        setSuccessMessage("Başarıyla giriş yaptınız!");
+        setSuccessMessage('Başarıyla giriş yaptınız!');
 
         // Ana sayfaya yönlendir
-        router.push("/");
+        router.push('/');
       }
     } catch (error) {
       if (error.response) {
-        console.log("API Hata Detayı:", error.response.data); // Hata detayını kontrol et
-        setErrorMessage(error.response.data.message || "Login failed.");
+        console.log('API Hata Detayı:', error.response.data); // Hata detayını kontrol et
+        setErrorMessage(error.response.data.message || 'Login failed.');
       } else {
-        setErrorMessage("An error occurred. Please try again.");
+        setErrorMessage('An error occurred. Please try again.');
       }
     } finally {
       setLoading(false);
@@ -124,16 +124,16 @@ export default function Login() {
           <button
             type="submit"
             className={`w-full ${
-              loading ? "bg-gray-400" : "bg-blue-600"
+              loading ? 'bg-gray-400' : 'bg-blue-600'
             } text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200`}
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
         <p className="mt-4 text-center">
-          Don&apos;t have an account?{" "}
+          Don&apos;t have an account?{' '}
           <a href="/register" className="text-blue-500 hover:underline">
             Register
           </a>

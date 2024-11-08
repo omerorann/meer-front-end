@@ -16,7 +16,7 @@ const IndirimliUrunler = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "https://meer-backend-3189f875378d.herokuapp.com/UrunYonetimi/getProducts"
+        `${process.env.NEXT_PUBLIC_API_URL}/UrunYonetimi/getProducts`
       );
       // Sadece indirimli ürünleri filtrele
       const discountedProducts = response.data.filter(

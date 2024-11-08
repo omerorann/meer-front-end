@@ -1,34 +1,34 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser, clearUser } from "../../redux/userSlice";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, clearUser } from '../../redux/userSlice';
+import { useRouter } from 'next/navigation';
 
 const Hesabim = () => {
   const [userData, setUserData] = useState(null);
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
   const [newAddress, setNewAddress] = useState({
-    street: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    country: "",
+    street: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    country: '',
   });
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [isAddingAddress, setIsAddingAddress] = useState(false);
-  const [activeTab, setActiveTab] = useState("kişiselBilgiler"); // Varsayılan sekme
+  const [activeTab, setActiveTab] = useState('kişiselBilgiler'); // Varsayılan sekme
   const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
 
         const response = await axios.get(
-          "https://meer-backend-3189f875378d.herokuapp.com/api/auth/me",
+          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -38,11 +38,11 @@ const Hesabim = () => {
 
         setUserData(response.data);
         setOrders([
-          { id: 1234, date: "25 Eylül 2023", total: 450 },
-          { id: 1235, date: "17 Ağustos 2023", total: 120 },
+          { id: 1234, date: '25 Eylül 2023', total: 450 },
+          { id: 1235, date: '17 Ağustos 2023', total: 120 },
         ]);
       } catch (error) {
-        setError("Kullanıcı verileri yüklenirken bir hata oluştu.");
+        setError('Kullanıcı verileri yüklenirken bir hata oluştu.');
         console.error(error);
       }
     };
@@ -51,17 +51,17 @@ const Hesabim = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userName");
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     dispatch(clearUser());
-    router.push("/");
+    router.push('/');
   };
 
   const handleAddAddress = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       await axios.post(
-        "https://meer-backend-3189f875378d.herokuapp.com/api/user/address",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/address`,
         newAddress,
         {
           headers: {
@@ -70,24 +70,24 @@ const Hesabim = () => {
         }
       );
       setNewAddress({
-        street: "",
-        city: "",
-        state: "",
-        postalCode: "",
-        country: "",
+        street: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        country: '',
       });
       setIsAddingAddress(false);
       fetchUser();
     } catch (error) {
-      console.error("Adres eklenirken bir hata oluştu.", error);
+      console.error('Adres eklenirken bir hata oluştu.', error);
     }
   };
 
   const handleUpdateAddress = async (addressId) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       await axios.put(
-        `https://meer-backend-3189f875378d.herokuapp.com/api/user/address/${addressId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/address/${addressId}`,
         newAddress,
         {
           headers: {
@@ -96,24 +96,24 @@ const Hesabim = () => {
         }
       );
       setNewAddress({
-        street: "",
-        city: "",
-        state: "",
-        postalCode: "",
-        country: "",
+        street: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        country: '',
       });
       setSelectedAddressId(null);
       fetchUser();
     } catch (error) {
-      console.error("Adres güncellenirken bir hata oluştu.", error);
+      console.error('Adres güncellenirken bir hata oluştu.', error);
     }
   };
 
   const handleDeleteAddress = async (addressId) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       await axios.delete(
-        `https://meer-backend-3189f875378d.herokuapp.com/api/user/address/${addressId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user/address/${addressId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -122,7 +122,7 @@ const Hesabim = () => {
       );
       fetchUser();
     } catch (error) {
-      console.error("Adres silinirken bir hata oluştu.", error);
+      console.error('Adres silinirken bir hata oluştu.', error);
     }
   };
 
@@ -151,39 +151,55 @@ const Hesabim = () => {
       {/* Menü */}
       <div className="flex justify-around mb-6">
         <button
-          className={`py-2 px-4 ${activeTab === "kişiselBilgiler" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-          onClick={() => setActiveTab("kişiselBilgiler")}
+          className={`py-2 px-4 ${
+            activeTab === 'kişiselBilgiler'
+              ? 'bg-blue-500 text-white'
+              : 'bg-gray-200'
+          }`}
+          onClick={() => setActiveTab('kişiselBilgiler')}
         >
           Kişisel Bilgilerim
         </button>
         <button
-          className={`py-2 px-4 ${activeTab === "adresler" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-          onClick={() => setActiveTab("adresler")}
+          className={`py-2 px-4 ${
+            activeTab === 'adresler' ? 'bg-blue-500 text-white' : 'bg-gray-200'
+          }`}
+          onClick={() => setActiveTab('adresler')}
         >
           Adreslerim
         </button>
         <button
-          className={`py-2 px-4 ${activeTab === "siparisler" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-          onClick={() => setActiveTab("siparisler")}
+          className={`py-2 px-4 ${
+            activeTab === 'siparisler'
+              ? 'bg-blue-500 text-white'
+              : 'bg-gray-200'
+          }`}
+          onClick={() => setActiveTab('siparisler')}
         >
           Siparişlerim
         </button>
         <button
-          className={`py-2 px-4 ${activeTab === "favoriler" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-          onClick={() => setActiveTab("favoriler")}
+          className={`py-2 px-4 ${
+            activeTab === 'favoriler' ? 'bg-blue-500 text-white' : 'bg-gray-200'
+          }`}
+          onClick={() => setActiveTab('favoriler')}
         >
           Favorilerim
         </button>
         <button
-          className={`py-2 px-4 ${activeTab === "sifreDegistir" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-          onClick={() => setActiveTab("sifreDegistir")}
+          className={`py-2 px-4 ${
+            activeTab === 'sifreDegistir'
+              ? 'bg-blue-500 text-white'
+              : 'bg-gray-200'
+          }`}
+          onClick={() => setActiveTab('sifreDegistir')}
         >
           Şifreyi Değiştir
         </button>
       </div>
 
       {/* Aktif Sekme İçeriği */}
-      {activeTab === "kişiselBilgiler" && (
+      {activeTab === 'kişiselBilgiler' && (
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Kullanıcı Bilgileri</h2>
           <p className="mb-2">
@@ -201,13 +217,14 @@ const Hesabim = () => {
         </div>
       )}
 
-      {activeTab === "siparisler" && (
+      {activeTab === 'siparisler' && (
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Sipariş Geçmişi</h2>
           <ul>
             {orders.map((order) => (
               <li key={order.id} className="mb-2">
-                <strong>Sipariş #{order.id}:</strong> {order.date} - {order.total}₺
+                <strong>Sipariş #{order.id}:</strong> {order.date} -{' '}
+                {order.total}₺
               </li>
             ))}
           </ul>
@@ -217,13 +234,17 @@ const Hesabim = () => {
         </div>
       )}
 
-      {activeTab === "adresler" && (
+      {activeTab === 'adresler' && (
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Adres Bilgileri</h2>
           {userData.addresses.length > 0 ? (
             userData.addresses.map((address) => (
-              <div key={address.addressId} className="mb-2 flex justify-between">
-                <strong>Adres:</strong> {address.street}, {address.city}, {address.state}, {address.postalCode}, {address.country}
+              <div
+                key={address.addressId}
+                className="mb-2 flex justify-between"
+              >
+                <strong>Adres:</strong> {address.street}, {address.city},{' '}
+                {address.state}, {address.postalCode}, {address.country}
                 <div>
                   <button
                     onClick={() => {
@@ -255,58 +276,74 @@ const Hesabim = () => {
           )}
           {isAddingAddress ? (
             <div>
-              <h3 className="text-lg font-semibold mt-4">Adres Ekle / Güncelle</h3>
+              <h3 className="text-lg font-semibold mt-4">
+                Adres Ekle / Güncelle
+              </h3>
               <input
                 type="text"
                 placeholder="Sokak"
                 value={newAddress.street}
-                onChange={(e) => setNewAddress({ ...newAddress, street: e.target.value })}
+                onChange={(e) =>
+                  setNewAddress({ ...newAddress, street: e.target.value })
+                }
                 className="border rounded p-2 mb-2 w-full"
               />
               <input
                 type="text"
                 placeholder="Şehir"
                 value={newAddress.city}
-                onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
+                onChange={(e) =>
+                  setNewAddress({ ...newAddress, city: e.target.value })
+                }
                 className="border rounded p-2 mb-2 w-full"
               />
               <input
                 type="text"
                 placeholder="Eyalet"
                 value={newAddress.state}
-                onChange={(e) => setNewAddress({ ...newAddress, state: e.target.value })}
+                onChange={(e) =>
+                  setNewAddress({ ...newAddress, state: e.target.value })
+                }
                 className="border rounded p-2 mb-2 w-full"
               />
               <input
                 type="text"
                 placeholder="Posta Kodu"
                 value={newAddress.postalCode}
-                onChange={(e) => setNewAddress({ ...newAddress, postalCode: e.target.value })}
+                onChange={(e) =>
+                  setNewAddress({ ...newAddress, postalCode: e.target.value })
+                }
                 className="border rounded p-2 mb-2 w-full"
               />
               <input
                 type="text"
                 placeholder="Ülke"
                 value={newAddress.country}
-                onChange={(e) => setNewAddress({ ...newAddress, country: e.target.value })}
+                onChange={(e) =>
+                  setNewAddress({ ...newAddress, country: e.target.value })
+                }
                 className="border rounded p-2 mb-2 w-full"
               />
               <button
-                onClick={() => (selectedAddressId ? handleUpdateAddress(selectedAddressId) : handleAddAddress())}
+                onClick={() =>
+                  selectedAddressId
+                    ? handleUpdateAddress(selectedAddressId)
+                    : handleAddAddress()
+                }
                 className="bg-blue-500 text-white rounded p-2"
               >
-                {selectedAddressId ? "Güncelle" : "Ekle"}
+                {selectedAddressId ? 'Güncelle' : 'Ekle'}
               </button>
               <button
                 onClick={() => {
                   setIsAddingAddress(false);
                   setSelectedAddressId(null);
                   setNewAddress({
-                    street: "",
-                    city: "",
-                    state: "",
-                    postalCode: "",
-                    country: "",
+                    street: '',
+                    city: '',
+                    state: '',
+                    postalCode: '',
+                    country: '',
                   });
                 }}
                 className="ml-2 bg-gray-500 text-white rounded p-2"
@@ -315,14 +352,17 @@ const Hesabim = () => {
               </button>
             </div>
           ) : (
-            <button onClick={() => setIsAddingAddress(true)} className="mt-4 bg-blue-500 text-white rounded p-2">
+            <button
+              onClick={() => setIsAddingAddress(true)}
+              className="mt-4 bg-blue-500 text-white rounded p-2"
+            >
               Yeni Adres Ekle
             </button>
           )}
         </div>
       )}
 
-      {activeTab === "favoriler" && (
+      {activeTab === 'favoriler' && (
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Favori Ürünlerim</h2>
           {/* Favori ürünlerinizi buraya ekleyin */}
@@ -330,7 +370,7 @@ const Hesabim = () => {
         </div>
       )}
 
-      {activeTab === "sifreDegistir" && (
+      {activeTab === 'sifreDegistir' && (
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Şifre Değiştir</h2>
           <input

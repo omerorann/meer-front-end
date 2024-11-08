@@ -20,7 +20,7 @@ const ProductDetailPage = () => {
   const fetchProduct = async () => {
     try {
       const response = await axios.get(
-        `https://meer-backend-3189f875378d.herokuapp.com/UrunYonetimi/GetProductById/${id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/UrunYonetimi/GetProductById/${id}`
       );
       setProduct(response.data); // API'den gelen tek ürün verisi
     } catch (error) {
@@ -181,7 +181,7 @@ const handleAddToCart = async (productId) => {
   try {
     const token = localStorage.getItem("token"); // Token'i localStorage'dan al
     await axios.post(
-      "https://meer-backend-3189f875378d.herokuapp.com/Product/AddToCart",
+      "",
       {
         productId,
         token, // Token'i body'ye ekle
@@ -198,7 +198,7 @@ const handleAddToFavorites = async (productId) => {
   try {
     const token = localStorage.getItem("token"); // Token'i localStorage'dan al
     await axios.post(
-      "https://meer-backend-3189f875378d.herokuapp.com/Product/AddToFavorites",
+      "",
       {
         productId,
         token, // Token'i body'ye ekle

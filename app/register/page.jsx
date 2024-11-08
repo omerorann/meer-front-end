@@ -1,21 +1,21 @@
-"use client";
-import { useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function Register() {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    Email: "",
-    Password: "",
-    Name: "",
-    SurName: "",
-    PhoneNumber: "",
+    Email: '',
+    Password: '',
+    Name: '',
+    SurName: '',
+    PhoneNumber: '',
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,36 +27,36 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
+    setErrorMessage('');
+    setSuccessMessage('');
 
     try {
       const response = await axios.post(
-        "https://meer-backend-3189f875378d.herokuapp.com/api/auth/register",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
         formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
 
       if (response.status === 200) {
-        setSuccessMessage("User registered successfully!");
+        setSuccessMessage('User registered successfully!');
         setFormData({
-          Email: "",
-          Password: "",
-          Name: "",
-          SurName: "",
-          PhoneNumber: "",
+          Email: '',
+          Password: '',
+          Name: '',
+          SurName: '',
+          PhoneNumber: '',
         });
-        router.push("/login");
+        router.push('/login');
       }
     } catch (error) {
       if (error.response) {
-        setErrorMessage(error.response.data || "Registration failed.");
+        setErrorMessage(error.response.data || 'Registration failed.');
       } else {
-        setErrorMessage("An error occurred. Please try again.");
+        setErrorMessage('An error occurred. Please try again.');
       }
     }
   };
@@ -164,7 +164,7 @@ export default function Register() {
         </form>
 
         <p className="mt-4 text-center">
-          Already have an account?{" "}
+          Already have an account?{' '}
           <a href="/login" className="text-blue-500 hover:underline">
             Login
           </a>
