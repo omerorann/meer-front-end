@@ -43,6 +43,10 @@ Bu projede aşağıdaki teknolojiler kullanılmıştır:
 - **.NET Core 8 MVC**: Admin paneli ve API yönetimi için kullanılan backend teknolojisi.
 - **Node.js**: Backend işlemleri için kullanılan JavaScript runtime.
 
+### Veritabanı:
+- **PostgreSQL**: AWS üzerinde barındırılan PostgreSQL veritabanı, veri depolama ve yönetim için kullanılmaktadır.
+
 ### Diğer:
 - **Vercel**: Proje, Vercel üzerinde barındırılmaktadır.
 - **Heroku**: Admin paneli için backend API'si Heroku üzerinde barındırılmaktadır.
+- **AWS RDS**: AWS üzerinde PostgreSQL veritabanı yönetimi yapılmaktadır.
