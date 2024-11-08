@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Meer - E-commerce Website (Geliştirme Aşamasında)
 
-## Getting Started
+Meer, **Next.js** ile geliştirilen bir e-ticaret platformudur. Bu proje, temel e-ticaret işlevselliği sağlamak amacıyla başlatılmış olup, şu anda geliştirme aşamasındadır. Hedef, kullanıcı dostu bir alışveriş deneyimi sunan, hızlı ve verimli bir platform yaratmaktır.
 
-First, run the development server:
+## Proje Durumu
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Geliştirme Aşamasında**: Bu proje halen geliştirilmekte olup, bazı özellikler eksik veya tamamlanmamış olabilir.
+- **Henüz Yayına Alınmadı**: Canlıya geçmeden önce bazı testler ve optimizasyonlar yapılacaktır.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Canlı Demo
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Projeyi [buradan](https://meer-mocha.vercel.app/) önizleyebilirsiniz.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Admin Paneli
 
-## Learn More
+Admin paneline erişim için aşağıdaki bağlantıyı kullanabilirsiniz:
 
-To learn more about Next.js, take a look at the following resources:
+[Admin Paneli](https://meer-backend-3189f875378d.herokuapp.com/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Özellikler
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Ürün Listeleme**: Ürünler web servisi ile sitede listelenebilir.
+- **Sepet Yönetimi**: Kullanıcılar ürünlerini sepete ekleyebilirler.
+- **Temel Arayüz**: Basit ve sezgisel kullanıcı arayüzü.
+- **Responsive Tasarım**: Mobil uyumlu arayüz.
 
-## Deploy on Vercel
+### Henüz Geliştirilmeyen Özellikler:
+- Ödeme işlemleri (Stripe veya başka bir sistem entegrasyonu)
+- Kullanıcı hesapları ve giriş
+- Ürün yorumları
+- İleri düzey filtreleme ve arama seçenekleri
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Kullanılan Teknolojiler
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Bu projede aşağıdaki teknolojiler kullanılmıştır:
+
+### Frontend:
+- **Next.js**: React tabanlı framework, sayfa önbellekleme ve SEO dostu özellikler.
+- **Tailwind CSS**: Hızlı ve özelleştirilebilir CSS framework’ü.
+- **Axios**: API isteklerini yönetmek için kullanılan HTTP istemcisi.
+
+### Backend:
+- **.NET Core 8 MVC**: Admin paneli ve API yönetimi için kullanılan backend teknolojisi.
+- **Node.js**: Backend işlemleri için kullanılan JavaScript runtime.
+
+### Diğer:
+- **Vercel**: Proje, Vercel üzerinde barındırılmaktadır.
+- **Heroku**: Admin paneli için backend API'si Heroku üzerinde barındırılmaktadır.
